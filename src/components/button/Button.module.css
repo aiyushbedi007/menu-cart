@@ -1,0 +1,17 @@
+.root {
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--border-radius-full);
+  color: var(--color-white);
+  padding: 0.5em 1.25em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.root:hover {
+  background-color: var(--color-primary-dark);
+  outline: 1px solid var(--color-primary-dark);
+  outline-offset: 2px;
+}

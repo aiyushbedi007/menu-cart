@@ -1,0 +1,56 @@
+.root {
+  position: relative;
+}
+
+.button {
+  border: none;
+  text-decoration: none;
+  margin: 0;
+  --color: var(--color-gray-80);
+  color: var(--color);
+  border: 1px solid var(--color);
+  border-radius: var(--border-radius-full);
+  padding: var(--spacing-half) var(--spacing-1);
+  background-color: unset;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.button[disabled] {
+  --color: var(--color-gray-40);
+  border-color: var(--color);
+  color: var(--color);
+  cursor: not-allowed;
+}
+
+.button:not([disabled]):hover {
+  outline: 3px solid var(--color-gray-90);
+}
+
+.button p {
+  margin: 0;
+  margin-left: var(--spacing-1);
+  font-size: var(--font-size-medium);
+}
+
+.flyout {
+  position: absolute;
+  right: 0;
+  /*align under the container */
+  top: 120%;
+  padding: var(--spacing-2);
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--shadow-medium);
+  /* height: 300px; */
+  /* width: 100px; */
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  background-color: var(--color-white);
+}
+
+.closed {
+  opacity: 0;
+}

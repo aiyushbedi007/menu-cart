@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-1);
+}
+
+.item {
+  padding: var(--spacing-half) var(--spacing-1);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.selected {
+  font-weight: bold;
+}
