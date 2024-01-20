@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cls } from "../../utils";
 import styles from "./MenuFilters.module.css";
 import { MenuFilter as MenuFilterType } from "../../api/menu";
