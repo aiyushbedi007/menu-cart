@@ -80,14 +80,12 @@ const CartCard = ({
       <div className={styles.buttonFlex}>
         {cartItem.quantity === 1 ? (
           <button
-            className={styles.button}
             onClick={() => updateQuantity(cartItem, "decrease")}
           >
             <ThrashIcon />
           </button>
         ) : (
           <button
-            className={styles.button}
             onClick={() => updateQuantity(cartItem, "decrease")}
           >
             <MinusIcon />
@@ -96,7 +94,6 @@ const CartCard = ({
         <span>{cartItem.quantity}</span>
 
         <button
-          className={styles.button}
           onClick={() => updateQuantity(cartItem, "decrease")}
         >
           <PlusIcon />
