@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Button } from "../button/Button";
 import { ReactComponent as CartIcon } from "../../assets/cart.svg";
 import { ReactComponent as MinusIcon } from "../../assets/minus.svg";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
@@ -13,8 +14,6 @@ type CartProps = {};
 export function Cart(props: CartProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState<CartItem[]>([]);
-  const [count, setCount] = useState(0);
-
   const flyoutRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -25,11 +24,10 @@ export function Cart(props: CartProps) {
     clickCaptureIgnore: [triggerRef],
   });
 
-  const { items: cartItems, updateQuantity, submit, billAmount } = useCart();
+  const { items: cartItems, updateQuantity, submit, billAmount, count } = useCart();
 
   useEffect(() => {
     setItems(cartItems);
-    setCount(cartItems.length);
   }, [cartItems]);
 
   return (
@@ -52,7 +50,7 @@ export function Cart(props: CartProps) {
         ) : (
           <p>Your order is empty</p>
         )}
-        <button onClick={() => submit()}><span>Place Order</span><span>$ {billAmount}</span></button>
+        <Button className={styles.order} onClick={() => submit()}>{`Place Order $ ${billAmount}`}</Button>
       </div>
     </div>
   );
@@ -75,29 +73,16 @@ const CartCard = ({
       <div className={styles.right}>
         <span className={styles.title}>{cartItem.foodItem.name}</span>
         <span className={styles.description}>{cartItem.foodItem.description}</span>
-        <span className={styles.price}>{cartItem.foodItem.price}</span>
+        <span className={styles.price}>$ {cartItem.foodItem.price}</span>
       </div>
       <div className={styles.buttonFlex}>
         {cartItem.quantity === 1 ? (
-          <button
-            onClick={() => updateQuantity(cartItem, "decrease")}
-          >
-            <ThrashIcon />
-          </button>
+          <ThrashIcon onClick={() => updateQuantity(cartItem, "decrease")} />
         ) : (
-          <button
-            onClick={() => updateQuantity(cartItem, "decrease")}
-          >
-            <MinusIcon />
-          </button>
+          <MinusIcon onClick={() => updateQuantity(cartItem, "decrease")} />
         )}
         <span>{cartItem.quantity}</span>
-
-        <button
-          onClick={() => updateQuantity(cartItem, "decrease")}
-        >
-          <PlusIcon />
-        </button>
+        <PlusIcon onClick={() => updateQuantity(cartItem, "increase")} />
       </div>
     </div>
   );

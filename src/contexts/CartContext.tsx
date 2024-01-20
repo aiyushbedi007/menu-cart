@@ -12,6 +12,7 @@ type CartContextType = {
   updateQuantity: (item: CartItem, operation: string) => void;
   submit: () => void;
   billAmount: number;
+  count: number;
 };
 
 const CartContext = createContext<CartContextType>({
@@ -20,6 +21,7 @@ const CartContext = createContext<CartContextType>({
   updateQuantity: () => { },
   submit: () => { },
   billAmount: 0,
+  count: 0
 });
 
 type CartProviderProps = {
@@ -29,11 +31,14 @@ type CartProviderProps = {
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [billAmount, setBillAmount] = useState(0);
+  const [count, setCount] = useState(0);
+
 
   const addItem = (item: MenuItem) => {
     const key = item.name;
-    const index = items.findIndex((item) => item.foodItem.name = key);
+    const index = items.findIndex((cartItem) => cartItem.foodItem.name === key);
     const newItems = [...items];
+    setCount(count + 1);
     setBillAmount(billAmount + item.price);
     if (index >= 0) {
       newItems[index].quantity++;
@@ -46,16 +51,19 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const updateQuantity = (item: CartItem, operation: string) => {
     const newItems = [...items];
     const index = items.indexOf(item);
-    if (operation==="increase"){
+    if (operation === "increase") {
       newItems[index].quantity++;
+      setCount(count + 1);
       setBillAmount(billAmount + item.foodItem.price);
       return setItems(newItems);
-    } else{
+    } else {
+      setCount(count - 1)
       const quantity = newItems[index].quantity;
-      setBillAmount(billAmount - item.foodItem.price);
       if (quantity === 1) {
+        setBillAmount(billAmount - item.foodItem.price);
         return setItems(newItems.splice(index, 1));
       }
+      setBillAmount(billAmount - item.foodItem.price);
       newItems[index].quantity--;
       return setItems(newItems);
     }
@@ -64,11 +72,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const submit = () => {
     console.log("submitting order");
     window.alert("Order Placed!");
+    setBillAmount(0);
+    setCount(0);
     setItems([]);
   };
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, submit, billAmount }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity, submit, billAmount, count }}>
       {children}
     </CartContext.Provider>
   );
